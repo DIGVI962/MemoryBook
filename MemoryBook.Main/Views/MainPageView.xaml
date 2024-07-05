@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MemoryBook.Main.ViewModels"
+             xmlns:views.Pages="clr-namespace:MemoryBook.Main.Views.Pages"
+             xmlns:utils="clr-namespace:MemoryBook.Main.Utils"
+             x:Class="MemoryBook.Main.Views.MainPageView"
+             BackgroundColor="Transparent">
+    <ContentPage.BindingContext>
+        <viewModels:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border
+                BackgroundColor="#303030" StrokeShape="RoundRectangle 10, 10, 10, 10"
+                StrokeThickness="0" Grid.Column="0" Grid.ColumnSpan="3"/>
+
+            <Button 
+                x:Name="HideLeftPaneButton" BackgroundColor="{Binding HideLeftPaneButtonColor}" ZIndex="999"
+                Margin="2, 30, 2, 0" MinimumHeightRequest="46" MinimumWidthRequest="46"
+                Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start">
+                <Button.GestureRecognizers>
+                    <PointerGestureRecognizer
+                        PointerEnteredCommand="{Binding HideLeftPaneButton_PointEnterExitCommand}"
+                        PointerExitedCommand="{Binding HideLeftPaneButton_PointEnterExitCommand}"/>
+                    <TapGestureRecognizer
+                        Command="{Binding HideLeftPaneButton_ClickCommand}"/>
+                </Button.GestureRecognizers>
+            </Button>
+
+            <Button 
+                x:Name="ShowHomePageButton" BackgroundColor="{Binding ShowHomePageButtonColor}" ZIndex="999"
+                Margin="2, 80, 2, 0" MinimumHeightRequest="46" MinimumWidthRequest="46"
+                Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start">
+                <Button.GestureRecognizers>
+                    <PointerGestureRecognizer
+                        PointerEnteredCommand="{Binding ShowHomePageButton_PointEnterExitCommand}"
+                        PointerExitedCommand="{Binding ShowHomePageButton_PointEnterExitCommand}"/>
+                    <TapGestureRecognizer
+                        Command="{Binding ShowHomePageButton_ClickCommand}"/>
+                </Button.GestureRecognizers>
+            </Button>
+
+            <Grid
+                Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border
+                        x:Name="LeftPane" Grid.Row="1" Grid.Column="0" BackgroundColor="#555555" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 10, 10, 10, 10" IsVisible="{Binding LeftPaneVisible}">
+
+                    </Border>
+
+                    <Border
+                        x:Name="MidPane" Grid.Row="1" Grid.Column="1" BackgroundColor="Transparent"
+                        StrokeThickness="0" MinimumWidthRequest="2">
+                        <utils:SplitterControl/>
+                    </Border>
+
+                    <Border
+                        x:Name="RightPane" Grid.Row="1" Grid.Column="{Binding RightPaneColumn}"
+                        Grid.ColumnSpan="{Binding RightPaneColumnSpan}" BackgroundColor="#7A7A7A" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 10, 10, 10, 10">
+                        <ContentPresenter
+                            x:Name="RightPaneContentView"
+                            Margin="20, 20, 20, 20"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand"
+                            BackgroundColor="#80101010"
+                            Content="{Binding RightPaneContent}"/>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentPage>
